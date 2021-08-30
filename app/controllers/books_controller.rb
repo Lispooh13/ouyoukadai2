@@ -24,6 +24,9 @@ before_action :ensure_correct_user, only:[:edit]
 
   def edit
     @book = Book.find(params[:id])
+    if @book.user == current_user
+      render 'edit'
+    end
   end
 
 
@@ -46,7 +49,7 @@ before_action :ensure_correct_user, only:[:edit]
   private
 
   def book_params
-    params.permit(:title, :body, :user_id)
+    params.require(:book).permit(:title, :body, :user_id)
   end
 
 
